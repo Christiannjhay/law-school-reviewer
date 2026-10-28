@@ -1,26 +1,193 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f7f4ee;
+  --surface: #ffffff;
+  --surface-2: #f1ede4;
+  --border: #e3ddd0;
+  --ink: #1b2233;
+  --muted: #5d6476;
+  --accent: #8a1c3b;
+  --accent-soft: #f6e6eb;
+  --gold: #a87a1d;
+  --gold-soft: #fbf1dc;
+  --good: #1f7a4d;
+  --good-soft: #e3f4ea;
+  --bad: #b42318;
+  --bad-soft: #fde8e6;
+}
+
+[data-theme="dark"] {
+  --bg: #0e1220;
+  --surface: #161b2c;
+  --surface-2: #1d2337;
+  --border: #2a3149;
+  --ink: #e8e9ef;
+  --muted: #9aa1b5;
+  --accent: #e4718f;
+  --accent-soft: #3a1d29;
+  --gold: #e2b65a;
+  --gold-soft: #33290f;
+  --good: #5fd39a;
+  --good-soft: #13321f;
+  --bad: #ff8a80;
+  --bad-soft: #3b1715;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--border);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-good: var(--good);
+  --color-good-soft: var(--good-soft);
+  --color-bad: var(--bad);
+  --color-bad-soft: var(--bad-soft);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-serif-display);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+/* Reviewer notes (rendered markdown) */
+.prose-notes {
+  line-height: 1.7;
+  font-size: 1rem;
+}
+.prose-notes h2 {
+  font-family: var(--font-serif-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 2rem 0 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 5rem;
+}
+.prose-notes h2:first-child {
+  border-top: 0;
+  margin-top: 0;
+  padding-top: 0;
+}
+.prose-notes h3 {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 1.5rem 0 0.5rem;
+  color: var(--accent);
+}
+.prose-notes p {
+  margin: 0.6rem 0;
+}
+.prose-notes ul,
+.prose-notes ol {
+  margin: 0.5rem 0 0.75rem;
+  padding-left: 1.35rem;
+}
+.prose-notes ul {
+  list-style: disc;
+}
+.prose-notes ol {
+  list-style: decimal;
+}
+.prose-notes li {
+  margin: 0.3rem 0;
+}
+.prose-notes li::marker {
+  color: var(--muted);
+}
+.prose-notes strong {
+  font-weight: 700;
+}
+.prose-notes em {
+  font-style: italic;
+}
+.prose-notes blockquote {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--gold);
+  background: var(--gold-soft);
+  border-radius: 0.5rem;
+}
+.prose-notes blockquote p {
+  margin: 0.2rem 0;
+}
+.prose-notes .table-wrap {
+  overflow-x: auto;
+  margin: 1rem 0;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+}
+.prose-notes table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.prose-notes th {
+  background: var(--surface-2);
+  text-align: left;
+  font-weight: 600;
+}
+.prose-notes th,
+.prose-notes td {
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  min-width: 8rem;
+}
+.prose-notes tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Flashcard flip */
+.flip {
+  perspective: 1400px;
+}
+.flip-inner {
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transform-style: preserve-3d;
+  position: relative;
+}
+.flip-inner.flipped {
+  transform: rotateY(180deg);
+}
+.flip-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flip-back {
+  transform: rotateY(180deg);
+  position: absolute;
+  inset: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-inner {
+    transition: none;
+  }
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
 }

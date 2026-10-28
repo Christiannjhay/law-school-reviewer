@@ -1,9 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
+  // Allow previewing the dev server through a Cloudflare quick tunnel.
+  allowedDevOrigins: ["*.trycloudflare.com"],
   turbopack: {
     rules: {
       "*.css": {

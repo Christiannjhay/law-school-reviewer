@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CrimPro Reviewer · Rules 115–126
 
-## Getting Started
+A mobile- and iPad-friendly Next.js reviewer for Rules 115–126 of the Revised Rules of Criminal Procedure, built from
+*Criminal Procedure Reviewer: Rules 115–126* (based on Salvador, *Criminal Procedure*, 2019, and A.M. No. 15-06-10-SC).
 
-First, run the development server:
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build && npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Review modes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Route | Mode |
+|---|---|
+| `/rules/[115-126]` | Full study notes with mnemonic callouts and table of contents |
+| `/cram` | Every mnemonic and period on one page |
+| `/compare` | Distinction tables with cover mode |
+| `/flashcards` | Flip cards with Leitner spaced-repetition boxes |
+| `/quiz` | Multiple choice with explanations |
+| `/true-false` | True or False |
+| `/identification` | Type-the-answer (lenient checking) |
+| `/mnemonics` | Recall, enumerate (typed, auto-checked) and browse |
+| `/cases` | Case-doctrine matching quiz and searchable digest list |
+| `/periods` | Periods & numbers drill and table |
+| `/essays` | Bar-style situational problems with model answers and self-grading |
+| `/exam` | Timed mixed mock exam with per-rule breakdown |
+| `/review` | Retake only what you missed |
+| `/search`, `/progress` | Global search; stats, streak and exam history |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Content lives in `data/` (one file per question bank). Progress is stored in the browser's localStorage, per device.
