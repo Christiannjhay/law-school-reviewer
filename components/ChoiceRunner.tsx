@@ -3,23 +3,32 @@
 import { useEffect, useState } from "react";
 import { Icon } from "@/components/icons";
 import { Button, Card, ProgressBar, RuleChip } from "@/components/ui";
-import type { ChoiceQ } from "@/lib/questions";
+import type { RunnerQ } from "@/lib/questions";
 import { recordAnswer, type Mode } from "@/lib/store";
 import { cx } from "@/lib/util";
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 
+function QuestionChip({ q }: { q: RunnerQ }) {
+  if (q.rule !== undefined) return <RuleChip rule={q.rule} />;
+  if (!q.tag) return null;
+  return <span className="inline-flex items-center rounded-md bg-gold-soft px-1.5 py-0.5 text-[11px] font-semibold text-gold">{q.tag}</span>;
+}
+
 /** Practice runner with instant feedback after each answer. */
-export function ChoiceRunner({
+export function ChoiceRunner<Q extends RunnerQ>({
   questions,
   mode,
+  onAnswer,
   onExit,
   onRetry,
 }: {
-  questions: ChoiceQ[];
-  mode: Mode;
+  questions: Q[];
+  /** Records to the Criminal Procedure progress store. Ignored when onAnswer is given. */
+  mode?: Mode;
+  onAnswer?: (id: string, correct: boolean) => void;
   onExit: () => void;
-  onRetry?: (missed: ChoiceQ[]) => void;
+  onRetry?: (missed: Q[]) => void;
 }) {
   const [i, setI] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
@@ -32,7 +41,8 @@ export function ChoiceRunner({
     setPicked(idx);
     const ok = idx === q.answer;
     setResults((r) => [...r, ok]);
-    recordAnswer(q.id, ok, mode);
+    if (onAnswer) onAnswer(q.id, ok);
+    else if (mode) recordAnswer(q.id, ok, mode);
   }
 
   function next() {
@@ -87,7 +97,7 @@ export function ChoiceRunner({
             <p className="text-sm font-semibold">Review what you missed</p>
             {missed.map((m) => (
               <div key={m.id} className="rounded-xl border border-line bg-bg p-3">
-                <RuleChip rule={m.rule} />
+                <QuestionChip q={m} />
                 <p className="mt-1.5 text-[15px] font-medium">{m.prompt}</p>
                 <p className="mt-1 text-sm text-good">✓ {m.choices[m.answer]}</p>
                 {m.explain && <p className="mt-1 text-sm text-muted">{m.explain}</p>}
@@ -113,7 +123,7 @@ export function ChoiceRunner({
 
       <Card>
         <div className="flex flex-wrap items-center gap-2">
-          <RuleChip rule={q.rule} />
+          <QuestionChip q={q} />
           <span className="text-xs font-medium text-muted">{q.kind}</span>
         </div>
         <p className="mt-3 text-lg font-semibold leading-snug sm:text-xl">{q.prompt}</p>

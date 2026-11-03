@@ -2,15 +2,24 @@ import { CASES, MCQS, PERIODS, TRUE_FALSE } from "@/lib/content";
 import type { CaseDoctrine, MCQ, Period, RuleId, TrueFalse } from "@/lib/types";
 import { sample, shuffle } from "@/lib/util";
 
-/** A normalized multiple-choice question used by the quiz, drill and exam runners. */
-export interface ChoiceQ {
+/** The fields the practice runner needs, whichever subject the question is from. */
+export interface RunnerQ {
   id: string;
-  rule: RuleId;
-  kind: "MCQ" | "True or False" | "Case doctrine" | "Periods & numbers";
+  /** Criminal Procedure rule, shown as a chip. */
+  rule?: RuleId;
+  /** Free-text chip for subjects that are not organized by rule. */
+  tag?: string;
+  kind: string;
   prompt: string;
   choices: string[];
   answer: number;
   explain?: string;
+}
+
+/** A normalized multiple-choice question used by the quiz, drill and exam runners. */
+export interface ChoiceQ extends RunnerQ {
+  rule: RuleId;
+  kind: "MCQ" | "True or False" | "Case doctrine" | "Periods & numbers";
 }
 
 export function fromMCQ(m: MCQ): ChoiceQ {

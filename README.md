@@ -1,7 +1,9 @@
-# CrimPro Reviewer · Rules 115–126
+# Law School Reviewer
 
-A mobile- and iPad-friendly Next.js reviewer for Rules 115–126 of the Revised Rules of Criminal Procedure, built from
-*Criminal Procedure Reviewer: Rules 115–126* (based on Salvador, *Criminal Procedure*, 2019, and A.M. No. 15-06-10-SC).
+A mobile- and iPad-friendly Next.js reviewer. Pick a subject on the homepage:
+
+- **Criminal Procedure** (`/crimpro`): Rules 115–126, built from *Criminal Procedure Reviewer: Rules 115–126* (based on Salvador, *Criminal Procedure*, 2019, and A.M. No. 15-06-10-SC).
+- **Property** (`/property`): study notes from Rabuya, *Pre-Bar Reviewer in Civil Law* (2021), pp. 156–240; mock board problems with provided answers from *QUAMTO Civil Law* (UST Golden Notes 2026), pp. 76–121; plus MCQ and True or False.
 
 ## Run
 
@@ -11,7 +13,7 @@ npm run dev     # http://localhost:3000
 npm run build && npm start
 ```
 
-## Review modes
+## Criminal Procedure review modes
 
 | Route | Mode |
 |---|---|
@@ -30,4 +32,13 @@ npm run build && npm start
 | `/review` | Retake only what you missed |
 | `/search`, `/progress` | Global search; stats, streak and exam history |
 
-Content lives in `data/` (one file per question bank). Progress is stored in the browser's localStorage, per device.
+## Property review modes
+
+| Route | Mode |
+|---|---|
+| `/property/notes/[id]` | Study notes by topic, with page references |
+| `/property/mock-board` | Essay problems, with random mock sets and self-grading |
+| `/property/mcq` | Multiple choice |
+| `/property/true-false` | True or False |
+
+Content lives in `data/` (one file per question bank), with Property under `data/property/`. Progress is stored in the browser's localStorage, per device.

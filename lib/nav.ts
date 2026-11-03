@@ -32,9 +32,24 @@ export const EXAM_NAV: NavItem[] = [
 ];
 
 export const MOBILE_TABS: { href: string; label: string; icon: IconName; match: string[] }[] = [
-  { href: "/", label: "Home", icon: "home", match: ["/"] },
+  { href: "/crimpro", label: "Home", icon: "home", match: ["/crimpro"] },
   { href: "/rules", label: "Study", icon: "book", match: ["/rules", "/cram", "/compare", "/search"] },
   { href: "/practice", label: "Practice", icon: "cards", match: ["/practice", ...PRACTICE_NAV.map((n) => n.href)] },
   { href: "/exam", label: "Exam", icon: "target", match: ["/exam", "/review"] },
   { href: "/progress", label: "Progress", icon: "chart", match: ["/progress"] },
+];
+
+export const PROPERTY_NAV: NavItem[] = [
+  { href: "/property/notes", label: "Study notes", icon: "book", desc: "Book II – Property, from the Pre-Bar Reviewer (pp. 156–240)" },
+  { href: "/property/mock-board", label: "Mock board / essay", icon: "scale", desc: "QUAMTO problems (pp. 76–121) with the provided answers" },
+  { href: "/property/mcq", label: "Multiple choice", icon: "quiz", desc: "Actual bar MCQs and new items, with explanations" },
+  { href: "/property/true-false", label: "True or False", icon: "check", desc: "Rapid-fire statements to test precision" },
+];
+
+export const PROPERTY_TABS: { href: string; label: string; icon: IconName; match: string[] }[] = [
+  { href: "/property", label: "Home", icon: "home", match: ["/property"] },
+  { href: "/property/notes", label: "Notes", icon: "book", match: ["/property/notes"] },
+  { href: "/property/mock-board", label: "Mock board", icon: "scale", match: ["/property/mock-board"] },
+  { href: "/property/mcq", label: "MCQ", icon: "quiz", match: ["/property/mcq"] },
+  { href: "/property/true-false", label: "T / F", icon: "check", match: ["/property/true-false"] },
 ];

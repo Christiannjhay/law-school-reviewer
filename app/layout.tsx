@@ -7,10 +7,10 @@ const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const fraunces = Fraunces({ variable: "--font-serif-display", subsets: ["latin"], weight: ["600", "700"] });
 
 export const metadata: Metadata = {
-  title: { default: "CrimPro Reviewer · Rules 115–126", template: "%s · CrimPro Reviewer" },
+  title: { default: "Law School Reviewer", template: "%s · Law School Reviewer" },
   description:
-    "Criminal Procedure reviewer for Rules 115–126: notes, flashcards, MCQs, true or false, identification, mnemonics, cases, periods, essays and mock exams.",
-  appleWebApp: { capable: true, title: "CrimPro", statusBarStyle: "default" },
+    "Law school reviewer for Criminal Procedure and Property: study notes, mock board problems, multiple choice, true or false and more.",
+  appleWebApp: { capable: true, title: "Law Reviewer", statusBarStyle: "default" },
 };
 
 export const viewport: Viewport = {

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { Icon } from "@/components/icons";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { EXAM_NAV, MOBILE_TABS, PRACTICE_NAV, STUDY_NAV, type NavItem } from "@/lib/nav";
+import { EXAM_NAV, MOBILE_TABS, PRACTICE_NAV, PROPERTY_NAV, PROPERTY_TABS, STUDY_NAV, type NavItem } from "@/lib/nav";
 import { cx } from "@/lib/util";
 
 function isActive(pathname: string, href: string) {
@@ -40,6 +40,11 @@ function SideGroup({ title, items, pathname }: { title: string; items: NavItem[]
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const onHome = pathname === "/";
+  const onProperty = isActive(pathname, "/property");
+  const subject = onHome ? "Choose a subject" : onProperty ? "Property" : "Criminal Procedure";
+  const dashboard = onProperty ? "/property" : "/crimpro";
+  const tabs = onProperty ? PROPERTY_TABS : MOBILE_TABS;
 
   return (
     <div className="min-h-dvh lg:flex">
@@ -50,27 +55,41 @@ export function AppShell({ children }: { children: ReactNode }) {
             <Icon name="scale" className="size-5" />
           </span>
           <span className="leading-tight">
-            <span className="block font-serif text-[15px] font-bold">CrimPro Reviewer</span>
-            <span className="block text-xs text-muted">Rules 115–126</span>
+            <span className="block font-serif text-[15px] font-bold">Law School Reviewer</span>
+            <span className="block text-xs text-muted">{subject}</span>
           </span>
         </Link>
         <nav className="mt-2 flex-1">
-          <ul className="mt-4">
-            <li>
-              <Link
-                href="/"
-                className={cx(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 text-sm",
-                  pathname === "/" ? "bg-accent-soft font-semibold text-accent" : "text-ink/80 hover:bg-surface-2",
-                )}
-              >
-                <Icon name="home" className="size-[18px]" /> Dashboard
-              </Link>
-            </li>
+          <ul className="mt-4 space-y-0.5">
+            {!onHome && (
+              <>
+                <li>
+                  <Link href="/" className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-ink/80 hover:bg-surface-2">
+                    <Icon name="left" className="size-[18px]" /> All subjects
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={dashboard}
+                    className={cx(
+                      "flex items-center gap-3 rounded-lg px-3 py-2 text-sm",
+                      pathname === dashboard ? "bg-accent-soft font-semibold text-accent" : "text-ink/80 hover:bg-surface-2",
+                    )}
+                  >
+                    <Icon name="home" className="size-[18px]" /> Dashboard
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
-          <SideGroup title="Study" items={STUDY_NAV} pathname={pathname} />
-          <SideGroup title="Practice" items={PRACTICE_NAV} pathname={pathname} />
-          <SideGroup title="Exam" items={EXAM_NAV} pathname={pathname} />
+          {onProperty && <SideGroup title="Property" items={PROPERTY_NAV} pathname={pathname} />}
+          {!onHome && !onProperty && (
+            <>
+              <SideGroup title="Study" items={STUDY_NAV} pathname={pathname} />
+              <SideGroup title="Practice" items={PRACTICE_NAV} pathname={pathname} />
+              <SideGroup title="Exam" items={EXAM_NAV} pathname={pathname} />
+            </>
+          )}
         </nav>
         <div className="mt-4 flex items-center justify-between px-3">
           <span className="text-xs text-muted">Theme</span>
@@ -85,12 +104,14 @@ export function AppShell({ children }: { children: ReactNode }) {
             <span className="grid size-8 place-items-center rounded-lg bg-accent text-white">
               <Icon name="scale" className="size-[18px]" />
             </span>
-            <span className="font-serif text-base font-bold">CrimPro Reviewer</span>
+            <span className="font-serif text-base font-bold">Law School Reviewer</span>
           </Link>
           <div className="flex items-center gap-1">
-            <Link href="/search" aria-label="Search" className="grid size-10 place-items-center rounded-full hover:bg-surface-2">
-              <Icon name="search" />
-            </Link>
+            {!onHome && !onProperty && (
+              <Link href="/search" aria-label="Search" className="grid size-10 place-items-center rounded-full hover:bg-surface-2">
+                <Icon name="search" />
+              </Link>
+            )}
             <ThemeToggle />
           </div>
         </header>
@@ -99,10 +120,11 @@ export function AppShell({ children }: { children: ReactNode }) {
       </div>
 
       {/* Bottom tab bar: phone and iPad portrait */}
+      {!onHome && (
       <nav className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/95 backdrop-blur lg:hidden">
         <ul className="mx-auto grid max-w-xl grid-cols-5">
-          {MOBILE_TABS.map((t) => {
-            const active = t.match.some((m) => isActive(pathname, m));
+          {tabs.map((t) => {
+            const active = t.href === dashboard ? pathname === dashboard : t.match.some((m) => isActive(pathname, m));
             return (
               <li key={t.href}>
                 <Link
@@ -120,6 +142,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           })}
         </ul>
       </nav>
+      )}
     </div>
   );
 }
