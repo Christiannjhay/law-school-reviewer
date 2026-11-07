@@ -40,5 +40,6 @@ npm run build && npm start
 | `/property/mock-board` | Essay problems, with random mock sets and self-grading |
 | `/property/mcq` | Multiple choice |
 | `/property/true-false` | True or False |
+| `/property/codal` | Codal drill on Arts. 414–773 of the Civil Code: separate MCQ and True or False banks, not mixed with the sets above |
 
 Content lives in `data/` (one file per question bank), with Property under `data/property/`. Progress is stored in the browser's localStorage, per device.

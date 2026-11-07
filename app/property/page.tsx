@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Icon } from "@/components/icons";
 import { PropertyStats } from "@/components/property/PropertyStats";
+import { CODAL_MCQS } from "@/data/property/codal-mcq";
+import { CODAL_TF } from "@/data/property/codal-truefalse";
 import { PROPERTY_ESSAYS } from "@/data/property/essays";
 import { PROPERTY_MCQS } from "@/data/property/mcq";
 import { PROPERTY_TOPICS } from "@/data/property/topics";
@@ -15,6 +17,7 @@ const counts: Record<string, number> = {
   "/property/mock-board": PROPERTY_ESSAYS.length,
   "/property/mcq": PROPERTY_MCQS.length,
   "/property/true-false": PROPERTY_TF.length,
+  "/property/codal": CODAL_MCQS.length + CODAL_TF.length,
 };
 
 export default function PropertyHome() {

@@ -4,18 +4,20 @@ import { useMemo, useState } from "react";
 import { ChoiceRunner } from "@/components/ChoiceRunner";
 import { countByTopic, TopicFilter } from "@/components/property/TopicFilter";
 import { Button, Card, Segmented } from "@/components/ui";
+import { CODAL_MCQS } from "@/data/property/codal-mcq";
+import { CODAL_TF } from "@/data/property/codal-truefalse";
 import { PROPERTY_MCQS } from "@/data/property/mcq";
 import { PROPERTY_TOPIC_MAP } from "@/data/property/topics";
 import { PROPERTY_TF } from "@/data/property/truefalse";
-import type { PropertyTopicId } from "@/data/property/types";
+import type { PropertyMCQ, PropertyTF, PropertyTopicId } from "@/data/property/types";
 import { recordPropertyAnswer } from "@/lib/propertyStore";
 import type { RunnerQ } from "@/lib/questions";
 import { sample, shuffle } from "@/lib/util";
 
 type Item = { topic: PropertyTopicId; build: () => RunnerQ };
 
-function mcqItems(): Item[] {
-  return PROPERTY_MCQS.map((m) => ({
+function mcqItems(bank: PropertyMCQ[]): Item[] {
+  return bank.map((m) => ({
     topic: m.topic,
     build: () => {
       const order = shuffle(m.choices.map((_, i) => i));
@@ -32,8 +34,8 @@ function mcqItems(): Item[] {
   }));
 }
 
-function tfItems(): Item[] {
-  return PROPERTY_TF.map((t) => ({
+function tfItems(bank: PropertyTF[]): Item[] {
+  return bank.map((t) => ({
     topic: t.topic,
     build: () => ({
       id: t.id,
@@ -47,8 +49,12 @@ function tfItems(): Item[] {
   }));
 }
 
-export function PropertyQuiz({ type }: { type: "mcq" | "tf" }) {
-  const items = useMemo(() => (type === "mcq" ? mcqItems() : tfItems()), [type]);
+/** `codal` switches to the separate Arts. 414–773 codal banks, kept apart from the regular sets. */
+export function PropertyQuiz({ type, codal = false }: { type: "mcq" | "tf"; codal?: boolean }) {
+  const items = useMemo(
+    () => (type === "mcq" ? mcqItems(codal ? CODAL_MCQS : PROPERTY_MCQS) : tfItems(codal ? CODAL_TF : PROPERTY_TF)),
+    [type, codal],
+  );
   const [topics, setTopics] = useState<PropertyTopicId[]>([]);
   const [count, setCount] = useState(20);
   const [session, setSession] = useState<RunnerQ[] | null>(null);

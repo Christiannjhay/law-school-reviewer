@@ -44,6 +44,7 @@ export const PROPERTY_NAV: NavItem[] = [
   { href: "/property/mock-board", label: "Mock board / essay", icon: "scale", desc: "QUAMTO problems (pp. 76–121) with the provided answers" },
   { href: "/property/mcq", label: "Multiple choice", icon: "quiz", desc: "Actual bar MCQs and new items, with explanations" },
   { href: "/property/true-false", label: "True or False", icon: "check", desc: "Rapid-fire statements to test precision" },
+  { href: "/property/codal", label: "Codal: Arts. 414–773", icon: "gavel", desc: "Separate MCQ and True or False drawn from the Civil Code text" },
 ];
 
 export const PROPERTY_TABS: { href: string; label: string; icon: IconName; match: string[] }[] = [
@@ -52,4 +53,5 @@ export const PROPERTY_TABS: { href: string; label: string; icon: IconName; match
   { href: "/property/mock-board", label: "Mock board", icon: "scale", match: ["/property/mock-board"] },
   { href: "/property/mcq", label: "MCQ", icon: "quiz", match: ["/property/mcq"] },
   { href: "/property/true-false", label: "T / F", icon: "check", match: ["/property/true-false"] },
+  { href: "/property/codal", label: "Codal", icon: "gavel", match: ["/property/codal"] },
 ];

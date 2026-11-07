@@ -122,7 +122,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       {/* Bottom tab bar: phone and iPad portrait */}
       {!onHome && (
       <nav className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/95 backdrop-blur lg:hidden">
-        <ul className="mx-auto grid max-w-xl grid-cols-5">
+        <ul className={cx("mx-auto grid max-w-xl", tabs.length > 5 ? "grid-cols-6" : "grid-cols-5")}>
           {tabs.map((t) => {
             const active = t.href === dashboard ? pathname === dashboard : t.match.some((m) => isActive(pathname, m));
             return (
